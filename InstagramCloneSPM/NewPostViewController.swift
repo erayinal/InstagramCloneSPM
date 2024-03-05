@@ -53,13 +53,18 @@ class NewPostViewController: UIViewController, UIImagePickerControllerDelegate, 
         let mediaFolder = storageReferance.child("Media") //..19 Firabase'de 'Media' dosyası aslında tüm Strorageın alt birimi. Firebase'de 'Media' adında bir dosya olmasa da sorun olmaz, bizim için kendi oluşturur. Media'nın da alt dosyaları olsaydı .child ile onlara da ulaşabilirdik
         
         //...19 Şimdi asıl olay nasıl kaydedeceğimiz. Kaydedebilmek için bizim görseli veriye çevirmemiz gerekiyor, çevirdikten sonra kaydedebiliyoruz, UIImage olarak kaydedemiyoruz:
-        if let data = imageView.image?.jpegData(compressionQuality: 0.5){ //....19 '0.5' burada bizim sıkıştırma katsayımız
+        if let data = imageView.image?.jpegData(compressionQuality: 0.5){ //....19 '0.5' burada bizim resmi sıkıştırma katsayımız
             let imageReferance = mediaFolder.child("images.jpg")
             imageReferance.putData(data, metadata: nil) { metaData, error in
                 if(error != nil){
                     print(error?.localizedDescription)
                 }else{
-                    
+                    imageReferance.downloadURL { url, error in
+                        if(error==nil){
+                            let imageUrl = url?.absoluteString  //20 Bu şekilde yüklediğimiz resmin url'sini alıyoruz ve aldığımız bu url'yi tarayıcıya yazarsak indirme yapar ve yükleme yaptığımız resmi indirir. İndirebilmemizin sebebi bizim firebase'imize kaydolması, bunu firebase'e gidip görebiliriz
+                            print(imageUrl)
+                        }
+                    }
                 }
             }
         }
