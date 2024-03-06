@@ -22,6 +22,7 @@
 		E80D9CA12B8B7DB500E526B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D9CA02B8B7DB500E526B9 /* SearchViewController.swift */; };
 		E80D9CA32B8B7DE300E526B9 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D9CA22B8B7DE300E526B9 /* NewPostViewController.swift */; };
 		E80D9CA52B8B7DF500E526B9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D9CA42B8B7DF500E526B9 /* ProfileViewController.swift */; };
+		E876B52A2B98B21000F2DA1A /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876B5292B98B21000F2DA1A /* HomeCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		E80D9CA02B8B7DB500E526B9 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		E80D9CA22B8B7DE300E526B9 /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		E80D9CA42B8B7DF500E526B9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E876B5292B98B21000F2DA1A /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				E80D9CA02B8B7DB500E526B9 /* SearchViewController.swift */,
 				E80D9CA22B8B7DE300E526B9 /* NewPostViewController.swift */,
 				E80D9CA42B8B7DF500E526B9 /* ProfileViewController.swift */,
+				E876B5292B98B21000F2DA1A /* HomeCell.swift */,
 			);
 			path = InstagramCloneSPM;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				E80D9CA12B8B7DB500E526B9 /* SearchViewController.swift in Sources */,
 				E80D9C642B8B471800E526B9 /* ViewController.swift in Sources */,
+				E876B52A2B98B21000F2DA1A /* HomeCell.swift in Sources */,
 				E80D9C602B8B471800E526B9 /* AppDelegate.swift in Sources */,
 				E80D9C622B8B471800E526B9 /* SceneDelegate.swift in Sources */,
 				E80D9CA52B8B7DF500E526B9 /* ProfileViewController.swift in Sources */,

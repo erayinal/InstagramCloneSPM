@@ -54,21 +54,61 @@ class NewPostViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         //...19 Şimdi asıl olay nasıl kaydedeceğimiz. Kaydedebilmek için bizim görseli veriye çevirmemiz gerekiyor, çevirdikten sonra kaydedebiliyoruz, UIImage olarak kaydedemiyoruz:
         if let data = imageView.image?.jpegData(compressionQuality: 0.5){ //....19 '0.5' burada bizim resmi sıkıştırma katsayımız
-            let imageReferance = mediaFolder.child("images.jpg")
+            
+            let uuid = UUID().uuidString //.21
+            //let imageReferance = mediaFolder.child("images.jpg")
+            //let imageReferance = mediaFolder.child(uuid) //..21 Şimdi bu yaptığımız değişiklikten sonra kaydedilen dosyaları indirirsek 'jpg' değil de 'dms' olarak indiğini görücez, bunun için bu satırı da yorum satırına alıyorum ve düzeltilmiş halini yazalım:
+            let imageReferance = mediaFolder.child("\(uuid).jpg")
+            
+            
             imageReferance.putData(data, metadata: nil) { metaData, error in
                 if(error != nil){
-                    print(error?.localizedDescription)
-                }else{
+                    //print(error?.localizedDescription)  //22 şimdi error meydana gelirse alert vermek için bu satırı yorum satırına alalım ve bir tane hazır method yazıp burada kullanalım:
+                    self.makeAlert(titleInput: "ERROR!", message: error?.localizedDescription ?? "Error") //..22
+                    
+                 }else{
                     imageReferance.downloadURL { url, error in
                         if(error==nil){
                             let imageUrl = url?.absoluteString  //20 Bu şekilde yüklediğimiz resmin url'sini alıyoruz ve aldığımız bu url'yi tarayıcıya yazarsak indirme yapar ve yükleme yaptığımız resmi indirir. İndirebilmemizin sebebi bizim firebase'imize kaydolması, bunu firebase'e gidip görebiliriz
-                            print(imageUrl)
+                            //print(imageUrl)
+                        
+                            //21 Upload işleminin çoğu tamam ama şöyle küçük bir olay var, yüklediğimiz her fotoğrafın adı 'image.jpg' olacak bu da her defasında önceki fotoğrafın silinmesine ve sadece bir fotoğrafın kaydolmasına sebep olur. Yapmamız gereken her görsele farklı unique bir isim sağlamak. Bunun için 'images.jpg' yazdığımız satırı yorum satırına alalım ve onun hemen üst satırında uuid tanımlayalım
+                            
+                            
+                            //23 Şimdi imageUrl'sini print'lemeyelim o yüzden yukarıdaki print(imageUrl) satırını yorum satırına alalım ve Firebase sitesinde 'Firestore Database' sekmesine girelim. Girdikten sonra 'Create database'e tıklayınca bize iki seçenek sunuyor birincisi 'locked mode' yani kimse yazıp okuma yapamaz, ikincisi ise 'Test mode' yani herkes yazma ve okuma yapabiliyor. Biz burada 'Test Mode'u seçicez. Oluşturduktan sonra Database hazır ve 'Start collection'a basalım, Id'si 'Posts' olsun, sonrasında Document ID kısmını auto-id diyelim, field kısmına 'comment' Value kısmına 'I love this photo' diyelim ve 'Save'e tıklayalım. Şimdi nasıl olduğunu anladığımıza göre 3 noktadan 'Delete Collection' ile silelim. Baştan oluşturucaz, yazmaya başlayalım:
+                            
+                            let firestoreDatabase = Firestore.firestore()
+                            var firestoreReferance : DocumentReference? = nil
+                            let firestorePost = ["imageUrl":imageUrl! , "postedBy":Auth.auth().currentUser!.email! , "postComment":self.commentText.text! , "date":FieldValue.serverTimestamp() , "likes":0] as [String : Any]
+                            firestoreReferance = firestoreDatabase.collection("Posts").addDocument(data: firestorePost, completion: { error in
+                                if(error != nil){
+                                    self.makeAlert(titleInput: "Error!", message: error?.localizedDescription ?? "Error")
+                                }else{
+                                    //24 Eğer hata çıkmazsa postumuz başarıyla paylaşıldı demektir, yani biz paylaştıktan sonra kullanıcıyı ana menüye atabiliriz.
+                                    
+                                    self.imageView.image = UIImage(named: "select (1)")
+                                    self.commentText.text = ""
+                                    self.tabBarController?.selectedIndex = 0  //.24 selected index ile 0 dersek ana sayfaya 1 dersek keşfet sayfasına 3 dersek... götürecek. Yani bu çok kullanışlı aslında. Tabi geçmeden NewPost sayfasındaki resmi yazıyı falan temizlememiz lazım ki geri gelirse aynı görüntüyle kaşılaşmasın. Bu yüzden bu satırın üstünde temizleme işlemlerini yapalım
+                                    
+                                    //25 Şimdi Home sayfasını tasarlamak için 'HomeViewController' class'ına geçelim
+                                }
+                            })
+                            
                         }
                     }
                 }
             }
         }
     }
+    
+    
+    
+    func makeAlert(titleInput: String, message : String) {
+        let alert = UIAlertController(title: titleInput, message: message, preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
+    } //.22 Şimdi bunu kullanalım
     
     
 
