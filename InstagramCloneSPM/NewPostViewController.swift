@@ -33,11 +33,12 @@ class NewPostViewController: UIViewController, UIImagePickerControllerDelegate, 
         let pickerController = UIImagePickerController()
         pickerController.delegate = self //..17 Bu satırı yazınca hata verecek çünkü bu sınıfın başında interface etmen gereken interface'ler var(UIImagePickerControllerDelegate, UINavigationControllerDelegate)
         pickerController.sourceType = .photoLibrary
+        pickerController.allowsEditing = true  // Burada editlemeye izin verdik bu yüzden imagePickerController içerisinde de editesImage olarak seçmek zorundayız
         present(pickerController, animated: true, completion: nil)
         //...17 Şimdi bir de didFinish methody yazmalıyız
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageView.image = info[.originalImage] as? UIImage
+        imageView.image = info[.editedImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
         //....17 Şidmi 'Info' sayfasından 'Privacy - Photo Library Usage' seçelim ve 'To Choose a Photo' yazalım
         //18 Buraya kadar fotoğraf seçme işlemini falan halletik şimdi 'Share' tuşuna basınca bu fotoğrafı ve yorumu Firebase'a atma ve Firebase'den çekerek Ana sayfada göstermek var. Bunun için Firebase sitesine gidip oradan 'Stroge'a tıklayalım. Tıklayınca iki adımlı iki tane soru soruyor, birincisi bize önce uygulamamız için Security Rules'ların nasıl olsun diye soruyor(default hali=giriş yapmayan biri de bakar/okur ama bir şey kaydetmek için Authantication'dan geçmiş olması lazım yani kullanıcı adı ve şifresiyle giriş yapmış olması lazım. İkinci soru ise 'Verileri nereye Kaydedeyim', burada mantıklı olan uygulamanın hedef kitlesi neredeyse oraya yakın bir yeri seçmemiz mantıklıdır. Globalse Avrupa, türkiye ise Avrupa, Amerika için Amerika yı seçmeliyiz. Bu ikinci ayarı sonradan değiştiremiyoruz o yüzden önemli bir adım. Bu iki sorudan sonra bizim için bir depolama alanı oluşturuluyor ve artık veri kaydedebiliyoruz.
