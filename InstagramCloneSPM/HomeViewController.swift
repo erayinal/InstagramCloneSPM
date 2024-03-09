@@ -23,6 +23,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var userCommentArray = [String]()
     var likeArray = [Int]()
     var userImageArray = [String]()  //.29 Resimleri de String olarak kaydetmiştik yani URL olarak
+    var documentIDArray = [String]() //.33
     
     
     override func viewDidLoad() {
@@ -43,10 +44,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! HomeCell //...27 Bu 'cell' variable'ı ile tanımladığımız tasarım içerisindeki butonlara labellara falan ulaşabiliyoruz
         cell.userEmailLabel.text = userEmailArray[indexPath.row]
-        cell.likeCounterLabel.text = String(likeArray[indexPath.row]) + " likes"
+        cell.likeCounterLabel.text = String(likeArray[indexPath.row])
         cell.commentLabel.text = userCommentArray[indexPath.row]
         //cell.userImageView.image = UIImage(named: "select (1)")
         cell.userImageView.sd_setImage(with: URL(string: self.userImageArray[indexPath.row])) //.31 Burada normalde 'complated' de yer alıyor bunu ilk çağırdığımızda ama CDWebImage o olmadan da kabul ediyor o yüzden sildim
+        
+        cell.documentIDLabel.text = documentIDArray[indexPath.row] //.....33
         
         return cell
         
@@ -74,6 +77,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.userEmailArray.removeAll(keepingCapacity: false)
                     self.userCommentArray.removeAll(keepingCapacity: false)
                     self.likeArray.removeAll(keepingCapacity: false) //..31
+                    self.documentIDArray.removeAll(keepingCapacity: false) //..33
                     
                     for document in snapshot!.documents{
                         
@@ -81,6 +85,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         //print(document.get("postedBy")!)
                         
                         let documentID = document.documentID
+                        self.documentIDArray.append(documentID) //...33 Şimdi main içerisine gidip gizli bir label oluşturalım. Gizli yapmak için yandan Attributes sekmesinden aşağıda 'Hidden' yapıcaz, sonrasında 'HomeCell' class'ı içerisinde tanımlayalım
                         //29 Yukarıda sınıfın başında sonradan kullanacğımız Array'ler tanımlayalım
                         if let postedBy = document.get("postedBy") as? String {
                             self.userEmailArray.append(postedBy)

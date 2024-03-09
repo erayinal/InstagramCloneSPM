@@ -8,8 +8,7 @@
 import UIKit
 import Firebase //.3 İmport ettikten sonra Application fonksiyonunun içerisine gidip
 
-@main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+@main class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
