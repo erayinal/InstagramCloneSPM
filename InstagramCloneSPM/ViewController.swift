@@ -34,6 +34,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     
+    @IBOutlet weak var instagramText: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -102,6 +105,22 @@ class ViewController: UIViewController {
     }
     
     
+    
+    //.35
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        let userStyle = traitCollection.userInterfaceStyle
+        
+        if(userStyle == .dark){
+            instagramText.textColor = UIColor.white
+            //instagramText.tintColor = UIColor.white
+        }
+        else{
+            instagramText.textColor = UIColor.black
+            //instagramText.tintColor = UIColor.white
+        }
+        print("çalıştı")
+    }
     
     
     

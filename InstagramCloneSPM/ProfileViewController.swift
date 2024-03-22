@@ -9,7 +9,9 @@ import UIKit
 import Firebase
 
 class ProfileViewController: UIViewController {
-
+    @IBOutlet weak var darkModeLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +37,26 @@ class ProfileViewController: UIViewController {
     }
     
     
+    
+    //35 Info içerisinde uygulamayı her zaman light modda çallışsın diye ayarlama yaptım
+    
+    @IBAction func darkModeSwitch(_ sender: UISwitch) {
+        
+        if #available(ios 13.0, *) {
+            let appDelegate = UIApplication.shared.windows.first
+            
+            if (sender.isOn){
+                darkModeLabel.textColor = .white
+                appDelegate?.overrideUserInterfaceStyle = .dark
+                return
+            }
+            darkModeLabel.textColor = .black
+            appDelegate?.overrideUserInterfaceStyle = .light
+            return
+            
+        }
+        
+    }
     
 
 }
