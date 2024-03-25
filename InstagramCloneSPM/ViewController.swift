@@ -89,9 +89,7 @@ class ViewController: UIViewController {
             alert.addAction(okButton)
             self.present(alert, animated: true, completion: nil)
         }
-        
         //13 Böylece kullanıcı yaratma adımı bitti, şimdi signInButton'a geçip giriş yapalım
-        
     }
     
     
@@ -101,7 +99,6 @@ class ViewController: UIViewController {
         let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
         alert.addAction(okButton)
         self.present(alert, animated: true, completion: nil)
-        
     }
     
     
@@ -113,17 +110,12 @@ class ViewController: UIViewController {
         
         if(userStyle == .dark){
             instagramText.textColor = UIColor.white
-            //instagramText.tintColor = UIColor.white
         }
         else{
             instagramText.textColor = UIColor.black
-            //instagramText.tintColor = UIColor.white
         }
-        print("çalıştı")
     }
     
-    
-    
-    
+            
 }
 
